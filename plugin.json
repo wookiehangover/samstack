@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "samstack",
+  "version": "0.1.0",
+  "description": "Seven engineering skills for code investigation, architecture, adversarial review, change impact, and performance evidence.",
+  "author": {
+    "name": "Sam",
+    "url": "https://github.com/wookiehangover"
+  },
+  "homepage": "https://github.com/wookiehangover/samstack#readme",
+  "repository": "https://github.com/wookiehangover/samstack",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "code-review",
+    "architecture",
+    "performance",
+    "investigation"
+  ]
+}

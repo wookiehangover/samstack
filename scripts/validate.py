@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Validate this evaluation package without network access or mutation."""
+"""Validate this skills-only Agent Plugin without network access or mutation."""
+import json
 import re
 import sys
 from pathlib import Path
@@ -12,6 +13,60 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 errors = []
+
+
+def validate_manifest(manifest):
+    """Apply Agent Plugins 1.0.0 manifest constraints locally."""
+    if not isinstance(manifest, dict):
+        return ['plugin.json: manifest must be an object']
+    issues = []
+    string_fields = {'$schema', 'name', 'version', 'description', 'homepage', 'repository', 'license'}
+    unknown = set(manifest) - string_fields - {'author', 'keywords', 'extensions'}
+    if unknown:
+        issues.append(f'plugin.json: unknown fields {sorted(unknown)}')
+    for key in string_fields & manifest.keys():
+        if not isinstance(manifest[key], str):
+            issues.append(f'plugin.json: {key} must be a string')
+    if manifest.get('$schema') != 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json':
+        issues.append('plugin.json: missing or unsupported $schema')
+    name = manifest.get('name')
+    if (not isinstance(name, str) or not 1 <= len(name) <= 64
+            or not re.fullmatch(r'[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?', name)
+            or '--' in name or '..' in name):
+        issues.append('plugin.json: invalid or missing name')
+    if 'author' in manifest:
+        author = manifest['author']
+        if (not isinstance(author, dict) or set(author) - {'name', 'email', 'url'}
+                or any(not isinstance(value, str) for value in author.values())):
+            issues.append('plugin.json: invalid author metadata')
+    if 'keywords' in manifest:
+        keywords = manifest['keywords']
+        if not isinstance(keywords, list) or any(not isinstance(value, str) for value in keywords):
+            issues.append('plugin.json: keywords must be an array of strings')
+    if 'extensions' in manifest:
+        extensions = manifest['extensions']
+        if (not isinstance(extensions, dict)
+                or any(not isinstance(value, dict) for value in extensions.values())):
+            issues.append('plugin.json: extensions must map namespaces to objects')
+    return issues
+
+
+for path in ROOT.rglob('*'):
+    if '.git' in path.parts:
+        continue
+    if not path.resolve().is_relative_to(ROOT):
+        errors.append(f'{path.relative_to(ROOT)}: package path escapes plugin root')
+if errors:
+    sys.exit('\n'.join(errors))
+
+try:
+    errors.extend(validate_manifest(json.loads((ROOT / 'plugin.json').read_text())))
+except (OSError, ValueError) as error:
+    errors.append(f'plugin.json: {error}')
+if not (ROOT / 'skills').is_dir():
+    errors.append('skills must be a directory')
+if (ROOT / 'mcp.json').exists():
+    errors.append('This skills-only package checker does not validate MCP configuration')
 skills = sorted((ROOT / 'skills').glob('*/SKILL.md'))
 if not skills:
     errors.append('No skill entrypoints found')
@@ -63,4 +118,5 @@ for document in ROOT.rglob('*.md'):
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'PASS: {len(skills)} skills; metadata, licenses, and {links} local links valid.')
+print(f'PASS: Agent Plugins 1.0.0 manifest and package boundaries; {len(skills)} skills; '
+      f'metadata, licenses, and {links} local links valid.')

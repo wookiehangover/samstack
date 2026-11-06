@@ -2,6 +2,14 @@
 
 This record distinguishes structural validation from behavioral evidence. No production adoption or automatic skill discovery has been tested.
 
+## Plugin packaging — 2026-11-06
+
+Added root `plugin.json` for `samstack` 0.1.0 targeting [Agent Plugins 1.0.0](https://agent-plugins.org/specification). The seven skills remain in the standard immediate-child discovery layout; no skill instructions changed. No MCP configuration or client extensions are shipped.
+
+The updated offline validator passed the manifest constraints, package containment, all seven skills, bundled licenses, and 32 local links. Its manifest rules were compared with the [published JSON schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json). Three valid and twelve invalid manifest cases passed a contract smoke check, including required fields, name syntax, unknown fields, and metadata types. Command-level checks in a temporary package also rejected malformed JSON and a symlink to a resource outside the plugin root. Whitespace checks passed.
+
+Validation used the same cached PyYAML described below and installed no dependencies. This establishes package-format checks, not an end-to-end client installation or marketplace listing. Client setup links and repository/local-directory installation guidance are in the README. The original behavioral trials below were not repeated for packaging-only changes.
+
 ## Structural checks
 
 Completed on 2026-11-04:

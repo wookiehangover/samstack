@@ -33,7 +33,7 @@ For an A/B comparison, keep source revision, tools, model, and task identical; u
 
 ## Re-run structural checks
 
-From this repository, run `python3 scripts/validate.py` using an interpreter with PyYAML available. It checks YAML metadata, names, bundled licenses, local Markdown targets, and standalone skill resources. It does not test model behavior or fetch external links. If PyYAML is missing, use an existing environment or cached copy as recorded in the results; do not install it globally just to run these checks.
+From this repository, run `python3 scripts/validate.py` using an interpreter with PyYAML available. It checks the root Agent Plugins 1.0.0 manifest, package path containment, YAML metadata, names, bundled licenses, local Markdown targets, and standalone skill resources. Manifest checks implement the published v1.0.0 constraints locally; they do not fetch a schema at runtime. This checker targets this skills-only package and rejects an added MCP configuration until validation for it is implemented. It does not test client installation or model behavior. If PyYAML is missing, use an existing environment or cached copy as recorded in the results; do not install it globally just to run these checks.
 
 The author also ran the available skill-creator's `quick_validate.py` on each skill. That helper belongs to the host installation, so its absolute path is not a repository dependency. See [recorded results](evals/RESULTS.md) for what was actually completed.
 
