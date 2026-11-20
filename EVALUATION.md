@@ -39,4 +39,4 @@ The author also ran the available skill-creator's `quick_validate.py` on each sk
 
 ## Adoption decision
 
-Start by retaining only skills that improve a real task without unnecessary ceremony. Keep a skill's whole folder, including references and LICENSE, if later adopting it. Choose host-specific invocation policy then; this repository neither installs nor activates it. Update the pinned source and attribution deliberately after future upstream review, not through an auto-update hook.
+Start by retaining skills that improve a real task without unnecessary ceremony. Keep each adopted skill's whole folder, including its LICENSE. Choose invocation settings in the client that loads it. Record upstream revisions and attribution in [provenance](PROVENANCE.md) when adapting future changes.

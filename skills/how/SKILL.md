@@ -1,18 +1,14 @@
 ---
 name: how
-description: Explain how a code subsystem works by tracing runtime flow, state ownership, boundaries, and failure paths with source citations. Use for code walkthroughs or placement and layering questions; historical motivation is a separate investigation.
+description: Explain how code works by tracing runtime flow, state ownership, and failures. Use for code walkthroughs and questions about where behavior lives.
 ---
 
 # How
 
-Build a useful mental model from the actual code. Default to read-only investigation: do not modify source or external state. Interpret a mildly vague question from available context, state that interpretation, and investigate; clarify if choosing the wrong target would waste substantial work.
+Trace and explain the code in one read-only pass. If the scope is mildly ambiguous, state the interpretation you used. Split the trace when independent paths would benefit from separate investigation.
 
-For a narrow question, trace and explain it directly. For a broad subsystem, divide it into a few distinct angles such as entrypoints, persistence, and cancellation. Native Intent delegation is optional; inspect available specialists, task notes, and signatures before use. Give each explorer a distinct slice and request evidence, not a polished narrative. Do not require particular models or a separate explainer agent.
+1. Start at a real entry point. Read definitions and callers through a representative input, decisions, effects, and return. Identify who owns state, who changes it, and when it is cleaned up. Follow relevant process and async boundaries, including failure, cancellation, or teardown.
+2. Check conflicting claims against the implementation. Label inferred runtime behavior and note any untraced path that could change the answer.
+3. Give an engineer enough context to work in the subsystem. Explain the mechanism, name the files and symbols that establish it, and surface the constraints that matter in practice. Use a small diagram if it clarifies the flow. Historical motivation needs its own evidence.
 
-Use [the tracing checklist](references/tracing.md) to gather and reconcile evidence. Read actual definitions and callers instead of inferring behavior from symbol names. Follow at least one representative path through inputs, state changes, async boundaries, and outputs. Include relevant error, cancellation, and teardown paths. Mark runtime claims that were inferred from source rather than observed in execution.
-
-Explain purpose and key concepts, then the flow, the few files someone should open next, and non-obvious constraints. Scale the structure to the question. Use a small diagram when multiple components make prose harder to follow. Cite symbols and file locations; avoid an annotated dump of every function.
-
-Check contradictions against code before merging explorer findings. Say which paths remain untraced. Code establishes mechanisms, not the author's original motivation; do not invent a historical rationale. This skill is standalone and requires no other skills or services.
-
-Adapted from Lauren Tan's pstack, MIT; see [license](LICENSE) and [source](https://github.com/cursor/plugins/blob/bb68f2365eceafa0cb2d253112f675acf5f144cc/pstack/skills/how/SKILL.md).
+Adapted from Lauren Tan's PStack under the MIT license. [License](LICENSE) · [Upstream walkthrough brief](https://github.com/cursor/plugins/blob/0b46ec399d55f2829e88822998f53b84944837d3/pstack/skills/how/SKILL.md)

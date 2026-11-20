@@ -9,7 +9,7 @@
 
 The GitHub web fetch was unavailable, so the revision and archive were retrieved through the GitHub CLI API. The archive was unpacked in agent-private temporary storage for inspection. No upstream script was executed and no plugin was installed. The destination was already initialized by Intent, empty and clean on `main`, with this workspace as a linked worktree; no reinitialization was needed.
 
-## Source-to-output map
+## Original source-to-output map
 
 All paths below are relative to the pinned upstream `pstack/` tree. [source-manifest.json](source-manifest.json) records source file SHA-256 digests and sizes, plus the archive digest, for reproducible comparison. Its inventory is broader than the retained package; inclusion in that manifest does not mean a file was imported or executed.
 
@@ -23,6 +23,12 @@ All paths below are relative to the pinned upstream `pstack/` tree. [source-mani
 | `skills/why/` | `skills/why/SKILL.md`; all four top-level references and all eight source references (code archaeology, Linear, Notion, Slack, Datadog, Sentry, Databricks, incident context). |
 | `skills/engineering-principles/` | `principle-attack-the-premise`, `principle-model-the-domain`, `principle-separate-before-serializing-shared-state`, `principle-make-operations-idempotent`, `principle-boundary-discipline`, `principle-encode-lessons-in-structure`, `principle-test-behavior-not-implementation`, with root-cause/minimal-change methods from the principle review. |
 | Disposition documents | README, plugin metadata, all top-level skill entrypoints, principles, poteto-mode playbooks, and the agent/automation resources listed in the individual assessment documents. |
+
+## Samstack 0.2.0 refresh
+
+Compared the original pin with PStack 0.15.46 at commit `0b46ec399d55f2829e88822998f53b84944837d3` on 2026-11-20. The refresh folds the design, tracing, and evidence checks for `architect`, `how`, and `why` into their entrypoints. It also tightens the principle checks, brings review history into `blast-radius`, and carries over the guidance for reporting benchmark results in a PR. [Upstream comparison](https://github.com/cursor/plugins/compare/bb68f2365eceafa0cb2d253112f675acf5f144cc...0b46ec399d55f2829e88822998f53b84944837d3)
+
+The model routing, Poteto worker, and Statechart changes concern components outside the Samstack package. The source manifest and disposition tables document the original pinned evaluation. [Original source manifest](source-manifest.json) · [Disposition index](docs/disposition.md)
 
 ## Deliberate changes
 

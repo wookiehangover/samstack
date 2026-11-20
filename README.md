@@ -1,6 +1,6 @@
 # samstack
 
-Seven small, independently usable engineering skills adapted from [Lauren Tan's pstack](https://github.com/cursor/plugins/tree/bb68f2365eceafa0cb2d253112f675acf5f144cc/pstack), packaged as an [Agent Plugins 1.0.0](https://agent-plugins.org/specification) plugin. The package includes evaluation prompts, evidence, and upstream attribution. It supplies skills only: no MCP servers, hooks, model configuration, or setup scripts.
+Seven standalone engineering skills adapted from Lauren Tan's PStack and packaged for Agent Plugins 1.0.0. The package includes evaluation prompts, evidence, and upstream attribution. [PStack](https://github.com/cursor/plugins/tree/0b46ec399d55f2829e88822998f53b84944837d3/pstack) · [Agent Plugins specification](https://agent-plugins.org/specification)
 
 ## Install
 
@@ -10,7 +10,7 @@ In an Agent Plugins-compatible client that supports skills, use its plugin insta
 https://github.com/wookiehangover/samstack
 ```
 
-Select the repository root as the plugin directory, and `main` if the installer asks for a branch. The root [plugin.json](plugin.json) identifies `samstack` version `0.1.0`; the client discovers all seven skills in `skills/`.
+Select the repository root as the plugin directory, and `main` if the installer asks for a branch. Samstack 0.2.0 supplies seven skills through the standard `skills/` directory. [Plugin manifest](plugin.json)
 
 For a client that loads local plugin directories, clone the repository and select the resulting `samstack` directory. Sam's existing checkout at `~/Developer/samstack` can be used directly; do not clone over it.
 
@@ -38,4 +38,4 @@ To try one without installing it, ask your current agent: “Read `~/Developer/s
 
 Read the [evaluation guide](EVALUATION.md), [disposition index](docs/disposition.md), [Intent adaptation notes](docs/intent-adaptation.md), and [provenance](PROVENANCE.md). [Validation results](evals/RESULTS.md) distinguish completed checks from trials still for Sam to run.
 
-Each skill folder includes its MIT license and required references so it can be evaluated on its own. No dependency installation is required for the skills. The optional repository checker (`python3 scripts/validate.py`) needs Python 3 with PyYAML; it checks plugin metadata, package boundaries, skills, licenses, and local links without network access. Fixture runs need Node.js. Installing the plugin is a separate user action; reading this repository does not activate it.
+Each skill folder includes its MIT license and a self-contained `SKILL.md`. The optional repository checker (`python3 scripts/validate.py`) needs Python 3 with PyYAML. It checks plugin metadata, package boundaries, skills, licenses, and local links offline. Fixture runs need Node.js.

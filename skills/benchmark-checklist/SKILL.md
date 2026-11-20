@@ -19,8 +19,10 @@ For a requested rough ballpark, one run may suffice: still verify errors, output
 
 Lead with faster, slower, no measurable difference, or inconclusive. Include units, counts, distribution, limiter evidence, versions, and what the result supports. Withhold a comparative conclusion when the limiter, fairness, errors, or completed work cannot be checked. A measured duration can still be reported with that limitation.
 
+When writing a PR summary, lead with the metric that supports the main claim. Link the raw runs, range, and bottleneck evidence.
+
 Use existing Intent saved scripts for long runs after inspecting their definitions and live API signatures. Keep raw results in the requested artifact or task note. Never create a perpetual tuning loop or change a production configuration merely to complete this checklist. No companion skill is required.
 
 If optimization is also requested, first consider eliminating measured unnecessary work, then reducing, caching, deferring, parallelizing, or cheapening it as the workload permits. Fix the measurement method and correctness gates before comparing hypotheses. Change one hypothesis at a time within the agreed effort budget; retain a gain only when the same workload improves without violating those gates. This is optional experimentation, not permission for an unattended hillclimb.
 
-Adapted from Lauren Tan's pstack, MIT; see [license](LICENSE) and [source](https://github.com/cursor/plugins/blob/bb68f2365eceafa0cb2d253112f675acf5f144cc/pstack/skills/benchmark-checklist/SKILL.md).
+Adapted from Lauren Tan's PStack under the MIT license. [License](LICENSE) · [Upstream benchmark checklist](https://github.com/cursor/plugins/blob/0b46ec399d55f2829e88822998f53b84944837d3/pstack/skills/benchmark-checklist/SKILL.md)
