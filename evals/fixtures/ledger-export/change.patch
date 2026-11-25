@@ -1,0 +1,33 @@
+From: A. Developer <dev@example.test>
+Subject: [PATCH] Rename amount_cents to amountCents
+
+Match the JS style guide (camelCase fields). Both modules that use the
+field are updated and the test passes.
+
+---
+ src/export.mjs | 2 +-
+ src/report.mjs | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+--- a/src/export.mjs
++++ b/src/export.mjs
+@@ -4,7 +4,7 @@ export function toRecord(txn) {
+   return {
+     id: txn.id,
+     account: txn.account,
+-    amount_cents: Math.round(txn.amount * 100),
++    amountCents: Math.round(txn.amount * 100),
+     ts: txn.ts,
+   };
+ }
+--- a/src/report.mjs
++++ b/src/report.mjs
+@@ -4,7 +4,7 @@ export function monthTotal(file) {
+   let cents = 0;
+   for (const line of readFileSync(file, 'utf8').split('\n')) {
+     if (!line) continue;
+-    cents += JSON.parse(line).amount_cents;
++    cents += JSON.parse(line).amountCents;
+   }
+   return cents / 100;
+ }

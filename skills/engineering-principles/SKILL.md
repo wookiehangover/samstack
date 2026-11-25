@@ -1,11 +1,11 @@
 ---
 name: engineering-principles
-description: Diagnose failed fixes, shared-state and retry failures, weak boundaries, and recurring mistakes during an engineering review.
+description: Pick a targeted reasoning check when a fix keeps failing, writers corrupt shared state, retries leave partial results, validation spreads through business logic, or the same mistake keeps recurring. Use for a stuck diagnosis or a design review that asks for principles. Not an always-on rule set, and not for routine edits.
 ---
 
 # Engineering principles
 
-Choose the check that changes the next decision.
+Choose the one check that changes the next decision. Do not run the whole table against every edit, widen the task's scope, or override constraints the user chose.
 
 | Situation | Method |
 |---|---|
@@ -17,6 +17,6 @@ Choose the check that changes the next decision.
 | A correction keeps recurring | Encode the demonstrated invariant in a type, ownership boundary, lint rule, or contract check. Use a focused example when judgment is required. |
 | A test mirrors the implementation | Use the observable contract for expected results. The test should fail when behavior breaks and pass when internals change without affecting behavior. |
 
-For a proposed change, record the symptom, evidence, smallest intervention, and how to verify it. Preserve compatibility while affected callers migrate.
+For a proposed change, record the symptom, evidence, smallest intervention, and how to verify it. Prefer removing a demonstrated cause to adding another workaround. Preserve compatibility while affected callers migrate.
 
 Adapted from Lauren Tan's PStack under the MIT license. [License](LICENSE) · [Upstream principle skills](https://github.com/cursor/plugins/tree/0b46ec399d55f2829e88822998f53b84944837d3/pstack/skills)

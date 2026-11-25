@@ -9,10 +9,31 @@ from urllib.parse import unquote, urlsplit
 try:
     import yaml
 except ImportError:
-    sys.exit('PyYAML is required; no dependency was installed.')
+    yaml = None
 
 ROOT = Path(__file__).resolve().parents[1]
 errors = []
+
+
+def parse_frontmatter(block):
+    """Use PyYAML when present; otherwise accept only flat plain-string scalars."""
+    if yaml is not None:
+        try:
+            return yaml.safe_load(block)
+        except yaml.YAMLError as error:
+            raise ValueError(str(error)) from error
+    metadata = {}
+    for line in block.splitlines():
+        if not line.strip():
+            continue
+        match = re.fullmatch(r'([A-Za-z][A-Za-z0-9_-]*): (\S.*)', line)
+        value = match.group(2).rstrip() if match else ''
+        if (not match or match.group(1) in metadata or ': ' in value or ' #' in value
+                or value.endswith(':') or value[0] in '[]{}&*!|>\'"%@`#,?-'
+                or re.fullmatch(r'(?i)true|false|yes|no|on|off|null|~|[-+.\d][\d._eE+-]*', value)):
+            raise ValueError(f'install PyYAML to check this line: {line!r}')
+        metadata[match.group(1)] = value
+    return metadata
 
 
 def validate_manifest(manifest):
@@ -71,6 +92,7 @@ skills = sorted((ROOT / 'skills').glob('*/SKILL.md'))
 if not skills:
     errors.append('No skill entrypoints found')
 license_text = (ROOT / 'LICENSE').read_text()
+pins = set()
 for entry in skills:
     text = entry.read_text()
     match = re.match(r'\A---\n(.*?)\n---\n', text, re.S)
@@ -78,10 +100,11 @@ for entry in skills:
         errors.append(f'{entry.relative_to(ROOT)}: missing frontmatter')
         continue
     try:
-        metadata = yaml.safe_load(match.group(1))
-    except yaml.YAMLError as error:
+        metadata = parse_frontmatter(match.group(1))
+    except ValueError as error:
         errors.append(f'{entry.relative_to(ROOT)}: invalid YAML: {error}')
         continue
+    pins.update(re.findall(r'github\.com/cursor/plugins/(?:blob|tree)/([0-9a-f]{40})/', text))
     if not isinstance(metadata, dict):
         errors.append(f'{entry.relative_to(ROOT)}: metadata must be a mapping')
         continue
@@ -97,6 +120,8 @@ for entry in skills:
     bundled_license = entry.parent / 'LICENSE'
     if not bundled_license.exists() or bundled_license.read_text() != license_text:
         errors.append(f'{entry.relative_to(ROOT)}: absent or changed attribution license')
+if len(pins) != 1:
+    errors.append(f'skills must cite one upstream revision; found {sorted(pins) or "none"}')
 
 links = 0
 for document in ROOT.rglob('*.md'):

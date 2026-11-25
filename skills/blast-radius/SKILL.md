@@ -1,13 +1,13 @@
 ---
 name: blast-radius
-description: Assess what a proposed code change could break beyond its diff, identify its load-bearing safety assumptions, and test them against real code. Use for change-impact or downstream-risk review.
+description: Assess what a proposed code change could break beyond its own diff by identifying the assumptions its safety depends on and testing them against real code. Use before merging or shipping a change, for change-impact or downstream-risk review, or when asked what else a change touches. Not for trivial local edits, and not for hunting bugs in the change's own intended behavior.
 ---
 
 # Blast radius
 
 Find the nonlocal behavior a change can break. A caller list is a starting point, not the result. Work within the user's scope and existing authorization. This review does not authorize fixes, deployment, or merging.
 
-1. Identify the repository, base, head, and any working-tree changes in scope. Read the relevant commits and review discussion if available in the selected project. If the base is unclear, inspect local history before asking.
+1. Identify the repository, base, head, and any working-tree changes in scope. Read the relevant commits and any review discussion that is available. If the base is unclear, inspect local history before asking.
 2. Read changed behavior and identify the one or two facts its safety depends on. Example: removing a cache entry cannot cancel work still used by another caller. Write a falsifiable statement rather than a reassuring summary.
 3. Follow dependencies beyond symbol references: serialized fields, storage readers, other languages, callbacks, feature flags, teardown, async ordering, and downstream consumers. Inspect the installed library version and local patches before relying on library behavior.
 4. For each consequential assumption, choose the cheapest discriminating check against actual code. A focused import, integration probe, or existing test often suffices. Use disposable inputs and isolated artifacts; a review is not permission to mutate live data. If execution is unavailable or prohibited, report the assumption as unproven and give the exact next check.
