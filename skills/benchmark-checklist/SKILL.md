@@ -1,6 +1,6 @@
 ---
 name: benchmark-checklist
-description: Audit measured speedups, regressions, or performance comparisons for correctness, completed work, tuning, repeatability, bottlenecks, and end-to-end relevance before using the numbers to choose an option.
+description: Audit a performance claim before acting on it by checking that a measured speedup, regression, or comparison timed correct, completed work under fair and repeatable conditions, and that it matters end to end. Use when benchmark numbers will drive a choice between options or support a claim in a PR. Not needed when no performance claim is being made.
 ---
 
 # Benchmark checklist
@@ -21,7 +21,7 @@ Lead with faster, slower, no measurable difference, or inconclusive. Include uni
 
 When writing a PR summary, lead with the metric that supports the main claim. Link the raw runs, range, and bottleneck evidence.
 
-Use existing Intent saved scripts for long runs after inspecting their definitions and live API signatures. Keep raw results in the requested artifact or task note. Never create a perpetual tuning loop or change a production configuration merely to complete this checklist. No companion skill is required.
+Run long benchmarks through the host's job or script facility if it has one, and keep raw results in the requested artifact. Never create a perpetual tuning loop or change a production configuration merely to complete this checklist.
 
 If optimization is also requested, first consider eliminating measured unnecessary work, then reducing, caching, deferring, parallelizing, or cheapening it as the workload permits. Fix the measurement method and correctness gates before comparing hypotheses. Change one hypothesis at a time within the agreed effort budget; retain a gain only when the same workload improves without violating those gates. This is optional experimentation, not permission for an unattended hillclimb.
 
