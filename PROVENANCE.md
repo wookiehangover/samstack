@@ -30,9 +30,13 @@ Compared the original pin with PStack 0.15.46 at commit `0b46ec399d55f2829e88822
 
 The model routing, Poteto worker, and Statechart changes concern components outside the Samstack package. The source manifest and disposition tables document the original pinned evaluation. [Original source manifest](source-manifest.json) · [Disposition index](docs/disposition.md)
 
+## Samstack 0.3.0 revision
+
+A local revision on 2026-11-25 with no new upstream material. It restores wording that the 0.2.0 refresh had removed from this repository's own 0.1.0 adaptation: when-to-use and when-not-to-use clauses in every description, the opening goal sentences, the evidence levels and source-coverage map in `why`, the citation rule in `how`, and the scope guards in `architect` and `engineering-principles`. It removes Intent-specific wording from `interrogate` and `benchmark-checklist`, so no skill names a host. All seven skills now cite the 0.15.46 revision; upstream's `interrogate` did not change between the two pins.
+
 ## Deliberate changes
 
-Removed Cursor slash commands, `pstack-models.mdc`, fixed provider/model names, mandatory agent fleets, global installation, session tracking, worktree management, and PR polling code. Replaced operational references with existing Intent facilities and live signature discovery. Condensed repeated prose and folded necessary cross-skill methods into each entrypoint or its local references.
+Removed Cursor slash commands, `pstack-models.mdc`, fixed provider/model names, mandatory agent fleets, global installation, session tracking, worktree management, and PR polling code. Replaced operational references with host-neutral wording such as “if the host supports delegation”. Condensed repeated prose and folded necessary cross-skill methods into each entrypoint; no skill ships separate reference files.
 
 Changed “design implies implement” to follow actual user scope. Kept unexecuted but consequential review concerns visible rather than silently discarding them. Reduced why's mandatory seven-way search to relevant available sources with a coverage map. Softened unconditional internal trust, immediate legacy deletion, and tooling-for-every-task rules to respect runtime invariants, compatibility, and proportional effort. Do not interpret an imported skill as permission to publish, merge, install, alter settings, or contact others.
 

@@ -10,7 +10,7 @@ In an Agent Plugins-compatible client that supports skills, use its plugin insta
 https://github.com/wookiehangover/samstack
 ```
 
-Select the repository root as the plugin directory, and `main` if the installer asks for a branch. Samstack 0.2.0 supplies seven skills through the standard `skills/` directory. [Plugin manifest](plugin.json)
+Select the repository root as the plugin directory, and `main` if the installer asks for a branch. Samstack 0.3.0 supplies seven skills through the standard `skills/` directory. [Plugin manifest](plugin.json)
 
 For a client that loads local plugin directories, clone the repository and select the resulting `samstack` directory. Sam's existing checkout at `~/Developer/samstack` can be used directly; do not clone over it.
 
@@ -32,10 +32,10 @@ Installation, enablement, and invocation syntax belong to the client, not the po
 | [why](skills/why/SKILL.md) | Recover rationale without confusing code behavior with historical intent. |
 | [engineering-principles](skills/engineering-principles/SKILL.md) | Diagnose failed premises, shared state, retries, and recurring mistakes. |
 
-Start with **blast-radius**, **benchmark-checklist**, and **why**: their evidence requirements are easy to assess on real work. Try **architect** and **interrogate** on consequential changes. Use **how** as a lightweight walkthrough and **engineering-principles** only when a specific check helps.
+Start with **architect**: it showed the clearest gain in the with-skill and no-skill trials. **blast-radius**, **why**, **how**, and **engineering-principles** each gained one point of five, mostly by making answers easier to check. **interrogate** and **benchmark-checklist** scored level with no skill. These are single runs on one model; see the [results](evals/RESULTS.md) for the limits.
 
 To try one without installing it, ask your current agent: “Read `~/Developer/samstack/skills/blast-radius/SKILL.md` and apply it to this local diff. Review only; do not change source.” This loads the file for that task; it does not register a slash command or prove automatic discovery works.
 
-Read the [evaluation guide](EVALUATION.md), [disposition index](docs/disposition.md), [Intent adaptation notes](docs/intent-adaptation.md), and [provenance](PROVENANCE.md). [Validation results](evals/RESULTS.md) distinguish completed checks from trials still for Sam to run.
+Read the [evaluation guide](EVALUATION.md), [disposition index](docs/disposition.md), [Intent adaptation notes](docs/intent-adaptation.md), and [provenance](PROVENANCE.md). [Validation results](evals/RESULTS.md) distinguish completed checks from what has not been tested.
 
-Each skill folder includes its MIT license and a self-contained `SKILL.md`. The optional repository checker (`python3 scripts/validate.py`) needs Python 3 with PyYAML. It checks plugin metadata, package boundaries, skills, licenses, and local links offline. Fixture runs need Node.js.
+Each skill folder includes its MIT license and a self-contained `SKILL.md`. The optional repository checker (`python3 scripts/validate.py`) needs only Python 3. It checks plugin metadata, package boundaries, skills, licenses, and local links offline. Fixture runs need Node.js.

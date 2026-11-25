@@ -1,6 +1,29 @@
 # Evaluation results
 
-This record distinguishes structural validation from behavioral evidence. No production adoption or automatic skill discovery has been tested.
+This record distinguishes structural validation from behavioral evidence. No production adoption or automatic skill discovery has been tested. Newest entries are first.
+
+## With-skill and no-skill trials for 0.3.0 — 2026-11-25
+
+All seven skills were run once with the skill and once without, on new fixtures whose prompts do not state the answer, and scored by a separate grader against an answer key written beforehand. The full method, checks, grader reasons, and raw answers are in the [trial record](trials-2026-11-25.md); the criteria are in the [answer key](answer-key.md).
+
+| Skill | No skill | With skill |
+|---|---|---|
+| blast-radius | 4/5 | 5/5 |
+| interrogate | 4/5 | 4/5 |
+| benchmark-checklist | 5/5 | 5/5 |
+| why | 4/5 | 5/5 |
+| how | 4/5 | 5/5 |
+| architect | 2/5 | 5/5 |
+| engineering-principles | 4/5 | 5/5 |
+| Total | 27/35 | 34/35 |
+
+Every no-skill answer found the planted problem, so the fixtures did not catch this model out. The with-skill answers were more complete and easier to check: they showed commands, named unknowns, and, for architect, gave caller examples and a second design. Only architect shows a large difference.
+
+This is one run per arm on one model (`gpt-6.2-sol`), and the answer key was written by the same author who edited the skills, so it leans toward what the skills ask for. Treat the one-point differences as suggestive. Automatic skill selection from the descriptions and the negative trials in the evaluation guide were not run.
+
+Structural check for this revision: `python3 scripts/validate.py` passed without PyYAML, covering the manifest, seven skills, licenses, local links, and a single upstream revision across the skills.
+
+The sections below are the records for 0.1.0 and the packaging change. The 0.2.0 skill text was never trialed.
 
 ## Plugin packaging — 2026-11-06
 
